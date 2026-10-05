@@ -1,4 +1,4 @@
-terraform{
+terraform{ #Comentario de teste
     required_providers{
         docker = {
             source = "kreuzwerker/docker"
