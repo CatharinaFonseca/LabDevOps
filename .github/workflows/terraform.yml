@@ -28,8 +28,15 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
 
-      - name: Terraform Apply
+      - name: Terraform Apply (somente na branch main)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          TF_VAR_aws_access_key = ${{ secrets.AWS_ACCESS_KEY_ID }}
+        run: terraform apply -auto-approve
+
+      - name: Smoke Test (verificação pós-deploy)
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           sleep 5
           docker ps
+          curl -s http://localhost:8081 | grep "Atualizado via pipeline"
