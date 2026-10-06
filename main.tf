@@ -9,11 +9,11 @@ terraform{ #Comentario de teste
 
 provider "docker" {}
 
-resource "docker_image" "nginx" {
+    resource "docker_image" "nginx" {
     name = "nginx:latest"
 }
 
-resource "docker_container" "web"{
+    resource "docker_container" "web"{
     name = "meu-container-web"
     image = docker_image.nginx.image_id
     ports{
